@@ -11,4 +11,9 @@
  *= require_self
  *= require_tree .
  */
-/n @import "bootstrap";
+@import "bootstrap";
+
+.user-info {
+  margin-top: 21px;
+  font-size: 1.2em;
+}
