@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
 
   validates :username, :uniqueness => { :case_sensitive => false }, length: { minimum: 3}, presence: true
 
+  has_many :assigned_wikis
+  has_many :wikis, :through => :assigned_wikis
+
+  has_many :created_wiki, :class_name => "Wiki", :foreign_key => :creator_id
+
 
   def login=(login)
     @login = login
