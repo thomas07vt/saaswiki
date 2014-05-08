@@ -1,2 +1,3 @@
 <h1>Dashboards#show</h1>
-<p>Find me in app/views/dashboards/show.html.erb</p>
+<%= link_to "My Wiki's", user_wikis_path(@user), class: 'btn btn-primary btn-lg' %>
+<%= link_to "New Wiki", new_wiki_path, class: 'btn btn-primary btn-lg' %>
