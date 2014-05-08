@@ -49,8 +49,14 @@
                   <a href="credits.html">Credits</a>
                 </li>
                 <div class="pull-right user-info">
+                  <% if !current_user %>
                     <%= link_to "Sign In", new_user_session_path, id: 'hSignIn' %> or 
                     <%= link_to "Sign Up", new_user_registration_path, id: 'hSignUp' %>
+                  <% else %>
+                    <%= link_to destroy_user_session_path, method: :delete, class: 'btn btn-primary btn-sm', id: 'hSignOut' do %>
+                      <span class="glyphicon glyphicon-log-out"></span>
+                    <% end %>
+                  <% end %>
                 </div>
               </ul>
             </nav>
