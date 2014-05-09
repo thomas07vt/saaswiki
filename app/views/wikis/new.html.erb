@@ -1,11 +1,50 @@
-<script src="/EpicEditor-v0.2.2/js/epiceditor.min.js"></script>
+<%= javascript_include_tag '/EpicEditor-v0.2.2/js/epiceditor.js' %>
+
+<script>
+  $(document).ready(function() {
+    var editor = new EpicEditor({ container: 'epiceditor', basePath: '', theme: { base: '/EpicEditor-v0.2.2/themes/base/epiceditor.css', preview: '/EpicEditor-v0.2.2/themes/preview/github.css', editor: '/EpicEditor-v0.2.2/themes/editor/epic-light.css' } });
+    editor.load();
+    var text = document.getElementById("wiki_body").value;
+    editor.importFile(null, text);
+
+    jQuery(function($) {
+      $('#new_wiki').submit(function(event) {
+        $('#wiki_body').val(editor.exportFile())
+      });
+    });
+  });
+</script>
+
 
 <div class="container">
-  <div class="col-md-6">
-    Edit
-  </div>
-  <div class="col-md-6">
-    View
-  </div>
+  <br>
+  <div class="col-md-12">
+    
+    <%= form_for [@wiki] do |f| %>
+      <% if @wiki.errors[:title].any?  %>
+        <div class="alert alert-danger">
+          <h4>There are <%= pluralize(@wiki.errors[:title].count, "error") %>.</h4>
+          <ul>
+            <% @wiki.errors[:title].each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= form_group_tag(@wiki.errors[:title]) do %>
+        <%= f.text_field :title, rows: 8, class: 'form-control', autofocus: 'autofocus', placeholder: "Enter Wiki Title Here..." %>
+      <% end %>
+      <%= f.text_area :body, rows: 8, class: 'form-control hide', placeholder: "Markdown body ..." %>
+      <div >
+        <br>
+        <div id="epiceditor" style="height: 500px;">    
+        </div>
+      </div>
+      <br>
+      <div class="form-group ">
+        <%= f.submit "Save Wiki", class: 'btn btn-success btn-lg' %>
+      </div>
+    <% end %>
 
+  </div>
 </div>

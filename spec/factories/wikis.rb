@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :wiki do
-    title "MyString"
+    title "My Title"
     body "MyText"
-    creator_id 1
+    creator_id
+    public true
   end
 end
