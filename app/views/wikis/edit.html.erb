@@ -8,7 +8,7 @@
     editor.importFile(null, text);
 
     jQuery(function($) {
-      $('#new_wiki').submit(function(event) {
+      $('#<%= "edit_wiki_#{@wiki.id}" %>').submit(function(event) {
         $('#wiki_body').val(editor.exportFile())
       });
     });
