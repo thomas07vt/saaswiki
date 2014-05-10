@@ -1,2 +1,18 @@
-<h1>Wikis#show</h1>
-<p>Find me in app/views/wikis/show.html.erb</p>
+<div class="container">
+  <div class="row">
+  <div class="col-md-10">
+    <h1 style="margin-bottom: 0px;"><%= @wiki.title %></h1>
+    <small style="margin-left: 3px;">
+      Created by <%= link_to @creator.username, @creator %> <%= time_ago_in_words(@wiki.created_at) %> ago.
+    </small>
+  </div>
+  <div class="col-md-2" style="margin-top: 20px; text-align: right;" >
+    <%= link_to "Edit Wiki", edit_wiki_path(@wiki), class: 'btn btn-success btn-lg', data: { no_turbolink: true } %>
+  </div>
+  </div>
+  <br>
+  <br>
+  <div id="show-wiki-body">
+    <%= markdown(@wiki.body) %>
+  </div>
+</div>

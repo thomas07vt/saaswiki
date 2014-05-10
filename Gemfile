@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'rb-readline'
 
+gem 'redcarpet'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

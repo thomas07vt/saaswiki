@@ -1,2 +1,22 @@
-<h1>Wikis#index</h1>
-<p>Find me in app/views/wikis/index.html.erb</p>
+<div class="section section-breadcrumbs">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>My Wiki's</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6"> 
+      Enter Some information here
+    </div> 
+    <div class="col-sm-6">
+      <!-- Add All Wiki's here -->
+      <%= render partial: 'wikis/wikithumb', collection: @wikis %>
+      <!-- End Wiki's -->
+    </div>
+  </div>
+</div>

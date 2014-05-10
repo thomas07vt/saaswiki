@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :wiki do
     title "My Title"
     body "MyText"
-    creator_id
+    creator
     public true
   end
 end
