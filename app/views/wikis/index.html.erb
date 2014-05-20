@@ -10,13 +10,22 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-6"> 
-      Enter Some information here
-    </div> 
-    <div class="col-sm-6">
-      <!-- Add All Wiki's here -->
-      <%= render partial: 'wikis/wikithumb', collection: @wikis %>
-      <!-- End Wiki's -->
+    <div class="col-md-12">
+      <% if @wikis.any? %>
+        <!-- Add All Wiki's here -->
+        <%= render partial: 'wikis/wikithumb', collection: @wikis %>
+        <!-- End Wiki's -->
+      <% else %>
+
+        <div class="col-md-12">
+          <div style="width: 80%; margin: 0px auto; text-align: center;">
+            <h3>You haven't created any Wiki's yet.</h3>
+            <br>
+            <%= link_to "Create First Wiki", new_wiki_path, class: 'btn btn-primary btn-lg', data: { no_turbolink: true } %>
+          </div>
+        </div>
+
+      <% end %>
     </div>
   </div>
 </div>

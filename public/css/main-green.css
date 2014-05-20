@@ -166,7 +166,7 @@ a:hover {
   text-align: center;
   background: #fafafa;
   position: relative;
-  width: 48%;
+  width: 33%;
   margin: 10px 1% 10px 0;
   padding: 20px;
   -webkit-border-radius: 7px;
@@ -311,7 +311,7 @@ a:hover {
 }
 @media (min-width: 768px) {
   .pricing-plan {
-    width: 25%;
+    width: 33%;
     margin: 20px 0;
     padding: 20px;
     -webkit-border-radius: 0;

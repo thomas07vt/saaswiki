@@ -1,0 +1,58 @@
+  <script type="text/javascript">
+    // This identifies your website in the createToken call below
+    Stripe.setPublishableKey("<%= "#{Rails.configuration.stripe[:publishable_key]}" %>");
+  </script>
+
+<div class="container" >
+
+  <%= form_tag charges_path,  class: 'form-stacked', id: 'payment-form' do |f| %>
+        <noscript>
+          <p>This form requires Javascript to use</p>
+        </noscript>
+
+        <div id="credit-card" style="display:block">
+          <div id="credit-card-errors" style="display:none">
+            <div id="stripe-error-message" class="alert-message block-message error">
+            </div>
+          </div>
+
+          <!-- these fields are disabled before submission and are never transmitted back to rails -->
+          <div class="clearfix">
+            <%= label_tag :credit_card_number %>
+            <div class="input">
+              <%= text_field_tag :number, nil, class: "field" %>
+            </div>
+          </div>
+
+          <div class="clearfix">
+            <%= label_tag :cvv, "Security code (CVV)" %>
+            <div class="input">
+              <%= text_field_tag :cvv, nil, class: "small" %>
+            </div>
+          </div>
+
+          <div class="clearfix">
+            <%= label_tag :expiration_month, "Expiration Month MM" %>
+            <div class="input">
+              <%= text_field_tag :exp_month, nil, class: "small" %>
+            </div>
+          </div>
+          <div class="clearfix">
+            <%= label_tag :expiration_year, "Expiration Year YYYY" %>
+            <div class="input">
+              <%= text_field_tag :exp_year, nil, class: "small" %>
+            </div>
+          </div>
+            <!-- empty -->
+          </div>
+          <span class="note">
+            Your credit card details will be sent directly to our payment processor
+          </span>
+        </div>
+
+        <div class="actions">
+          <%= submit_tag "Submit" , :class => "btn primary" %>
+        </div>
+      <% end %>
+
+</div>

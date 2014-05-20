@@ -20,8 +20,9 @@
         <link rel="stylesheet" href="/css/leaflet.ie.css" />
     <![endif]-->
     <link rel="stylesheet" href="/css/main.css">
-
     <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <%= javascript_include_tag "https://js.stripe.com/v2/" %>
+
 </head>
     <body>
         <!--[if lt IE 7]>
@@ -35,21 +36,33 @@
             <nav id="mainmenu" class="mainmenu">
               <ul>
                 <li class="logo-wrapper">
-                    <a href="index.html"><img src="/img/mPurpose-logo.png" alt="Multipurpose Twitter Bootstrap Template"></a>
+                    <%= link_to content_tag(:h3, 'WikiWrite'), root_path %>
                 </li>
-                <li class="active">
-                  <a href="index.html">Home</a>
-                </li>
-                <li>
-                  <a href="features.html">Features</a>
-                </li>
-                <li>
-                  <a href="credits.html">Credits</a>
-                </li>
+                <% if current_user %>
+                  <li class="active">
+                    <%= link_to "My Wikis", user_wikis_path(current_user) %>
+                  </li>
+                  <li>
+                    <%= link_to "New Wiki", new_wiki_path, data: { no_turbolink: true } %>
+                  </li>
+                  <li>
+                    <a href="credits.html">Popular Wikis</a>
+                  </li>
+                <% else %>
+                  <li class="active">
+                    <a href="features.html">Features</a>
+                  </li>
+                  <li>
+                    <a href="pricing.html">Pricing</a>
+                  </li>
+                  <li>
+                    <a href="contactus.html">Contact Us</a>
+                  </li>
+                <% end %>
                 <div class="pull-right user-info">
                   <% if !current_user %>
                     <%= link_to "Sign In", new_user_session_path, id: 'hSignIn' %> or 
-                    <%= link_to "Sign Up", new_user_registration_path, id: 'hSignUp' %>
+                    <%= link_to "Sign Up", new_user_registration_path, id: 'hSignUp', data: { no_turbolink: true } %>
                   <% else %>
                     Hello <%= link_to (current_user.username || current_user.email), current_user %>!
                     <%= link_to edit_user_registration_path, class: 'btn btn-primary btn-sm' do %>
@@ -65,24 +78,28 @@
           </div>
         </div>
 
-      <% if flash[:notice] %>
-        <div class="alert alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <%= flash[:notice] %>
-        </div>
-      <% elsif flash[:error] %>
-        <div class="alert alert-danger">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <%= flash[:error] %>
-        </div>
-      <% elsif flash[:alert] %>
-        <div class="alert">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
+      <main> 
+        <% if flash[:notice] %>
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:notice] %>
+          </div>
+        <% elsif flash[:error] %>
+          <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:error] %>
+          </div>
+        <% elsif flash[:alert] %>
+          <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+          
+        <%= yield %>
 
-      <%= yield %>
+      </main>
+
       
     <!-- Footer -->
     <div class="footer">

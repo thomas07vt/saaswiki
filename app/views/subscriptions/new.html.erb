@@ -22,7 +22,7 @@
               <li><strong>Unlimited</strong> projects</li>
               <li><strong>2GB</strong> storage</li>
             </ul>
-            <%= link_to "Select plan", new_user_registration_path(plan: 0), class: "btn", data: { no_turbolink: true } %>
+            <%= link_to "Select plan", new_subscription_path(plan: 0), class: "btn" %>
             
           </div>
           <div class="pricing-plan <%= "pricing-plan-promote" if @plan.pid == 1 %>">
@@ -38,7 +38,7 @@
               <li><strong>Unlimited</strong> projects</li>
               <li><strong>20GB</strong> storage</li>
             </ul>
-            <%= link_to "Select plan", new_user_registration_path(plan: 1), class: "btn", data: { no_turbolink: true } %>
+            <%= link_to "Select plan", new_subscription_path(plan: 1), class: "btn" %>
           </div>
           <div class="pricing-plan <%= "pricing-plan-promote" if @plan.pid == 2 %>">
             <% if @plan.pid == 2 %>
@@ -53,7 +53,7 @@
               <li><strong>Unlimited</strong> projects</li>
               <li><strong>100GB</strong> storage</li>
             </ul>
-          <%= link_to "Select plan", new_user_registration_path(plan: 2), class: "btn", data: { no_turbolink: true } %>
+          <%= link_to "Select plan", new_subscription_path(plan: 2), class: "btn" %>
           </div>
         </div>
     </div>
@@ -63,10 +63,7 @@
 <div class="col-md-12">
   <div class="logindiv">
           <div class="basic-login">
-
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-              <%= devise_error_messages! %>
-
+            <%= form_tag subscriptions_path,  class: 'form-stacked', id: 'payment-form' do |f| %>
               <noscript>
                 <p>This form requires Javascript to use</p>
               </noscript>
@@ -75,17 +72,17 @@
                 <h2>Create your account</h2>
               </div>
 
-              <div><%= f.label :username %><br />
-                 <%= f.text_field :username, autofocus: true, class: 'form-control' %></div>
+              <div><%= label_tag :username %><br />
+                 <%= text_field_tag :username, nil , autofocus: true, class: 'form-control' %></div>
               <br>
-              <div><%= f.label :email %><br />
-              <%= f.email_field :email, class: 'form-control' %></div>
+              <div><%= label_tag :email %><br />
+              <%= email_field_tag :email, nil , class: 'form-control' %></div>
               <br>
-              <div><%= f.label :password %><br />
-                <%= f.password_field :password, autocomplete: "off", class: 'form-control' %></div>
+              <div><%= label_tag :password %><br />
+                <%= password_field_tag :password, nil , autocomplete: "off", class: 'form-control' %></div>
               <br>
-              <div><%= f.label :password_confirmation %><br />
-                <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %></div>
+              <div><%= label_tag :password_confirmation %><br />
+                <%= password_field_tag :password_confirmation, nil , autocomplete: "off", class: 'form-control' %></div>
               <br>
 
               <div id="credit-card" style="display:block" class="<%= "hide" if @plan.pid == 0 %>">
@@ -99,9 +96,6 @@
                 </div>
 
                 <!-- these fields are disabled before submission and are never transmitted back to rails -->
-
-                <h3><span class="payment-errors" style="color: red;"></span></h3>
-
                 <div><%= label_tag :credit_card_number %>
                  <%= text_field_tag :number, nil, class: 'form-control', autocomplete: 'off' %></div>
 
@@ -121,20 +115,15 @@
                 </div>
 
               </div>
-              <div>
-                <%= f.hidden_field :plan, value: @plan.pid %>
-                <%= f.hidden_field :stripe_tok %>
-              </div>
+              <%= hidden_field_tag "plan_id", @plan.pid %>
               <br>
+              <div class="field">
+                <%= submit_tag "Sign Up" , class: "btn pull-right" %>
+              </div>
 
-              <div class: 'form-group'>
-                <%= f.submit "Sign up", class: 'btn pull-right' %>
-              </div>
-              <div class="form-group">
-                <%= render "devise/shared/links" %>
-              </div>
+              <br><br>
+
             <% end %>
-
 
           </div>
     </div>

@@ -28,3 +28,34 @@
   padding: 5px;
   box-shadow: -5px -5px 10px #888;
 }
+
+.logindiv {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.loginpricingdiv {
+  width: 60%;
+  margin: 0 auto;
+}
+
+#exp_year {
+  width: auto;
+  display: inline;
+  float: right;
+  margin-right: 2px;
+}
+
+#exp_month {
+  width: auto;
+  display: inline;
+  float: right;
+  margin-right: 2px;
+}
+
+#cvc {
+  width: 75px;
+  display: inline;
+  float: right;
+}
+

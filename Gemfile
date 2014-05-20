@@ -32,6 +32,8 @@ gem 'rb-readline'
 
 gem 'redcarpet'
 
+gem 'stripe'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -51,7 +53,6 @@ end
 
 gem "bootstrap-sass", "~> 3.1.1"
 gem "entypo-rails"
-gem "sass-rails", "~> 4.0.2"
 gem "devise"
 gem "jquery-turbolinks"
 gem "toastr-rails"

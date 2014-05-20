@@ -1,0 +1,193 @@
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey("<%= "#{Rails.configuration.stripe[:publishable_key]}" %>");
+</script>
+
+<div class="container">
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-4">
+      <div class="col-md-12">      
+        <h3>Current Plan</h3>
+      </div> 
+      <div class="col-md-12">
+        <div style="width: 80%; margin: 0px auto;">
+          <div class="pricing-plan" style="width: 100%">
+              <div class="ribbon-wrapper">
+                <div class="price-ribbon ribbon-green">Selected</div>
+              </div>
+              <h2 class="pricing-plan-title"><%= @plan.name.titleize %></h2>
+              <div class="pricing-plan-price"><%= @plan.cost %></div>
+              <ul class="pricing-plan-features">
+                <li><strong>1</strong> user</li>
+                <li><strong>Unlimited</strong> projects</li>
+                <li><strong>2GB</strong> storage</li>
+              </ul>
+              <%= link_to "Current Plan",{ anchor: "paymentForm" }, class: "btn subscriptionUpdate", id: @plan.pid %>
+            </div>
+          </div>
+      </div>
+    </div>
+
+      <div class="col-md-8">
+        <div class="col-md-12">      
+          <h3>Plan Options</h3>
+        </div> 
+        <div class="col-md-12" style="border-left: 1px solid black;">
+          <div class="col-md-6 <%= "hide" if @plan.pid == 0 %> ">
+            <div style="width: 80%; margin: 0px auto;">
+              <div class="pricing-plan" style="width: 100%">
+                  <h2 class="pricing-plan-title">Basic</h2>
+                  <div class="pricing-plan-price">FREE</div>
+                  <ul class="pricing-plan-features">
+                    <li><strong>1</strong> user</li>
+                    <li><strong>Unlimited</strong> projects</li>
+                    <li><strong>2GB</strong> storage</li>
+                  </ul>
+                  <%= link_to "Select Plan", {anchor: "paymentForm"}, class: "btn subscriptionUpdate", id: "0"%>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 <%= "hide" if @plan.pid == 1 %>">
+            <div style="width: 80%; margin: 0px auto;">
+              <div class="pricing-plan" style="width: 100%">
+                  <h2 class="pricing-plan-title">Premium</h2>
+                  <div class="pricing-plan-price">$10<span>/mo</span></div>
+                  <ul class="pricing-plan-features">
+                    <li><strong>10</strong> users</li>
+                    <li><strong>Unlimited</strong> projects</li>
+                    <li><strong>20GB</strong> storage</li>
+                  </ul>
+                  <%= link_to "Select Plan", {anchor: "paymentForm"}, class: "btn subscriptionUpdate", id: "1"%>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 <%= "hide" if @plan.pid == 2 %>">
+            <div style="width: 80%; margin: 0px auto;">
+              <div class="pricing-plan" style="width: 100%">
+                  <h2 class="pricing-plan-title">Enterprise</h2>
+                  <div class="pricing-plan-price">$50<span>/mo</span></div>
+                  <ul class="pricing-plan-features">
+                    <li><strong>Unlimited</strong> users</li>
+                    <li><strong>Unlimited</strong> projects</li>
+                    <li><strong>100GB</strong> storage</li>
+                  </ul>
+                  <%= link_to "Select Plan", {anchor: "paymentForm"}, class: "btn subscriptionUpdate", id: "2"%>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+<div class="col-md-12">
+  <div class="logindiv">
+      <div class="basic-login hide" id="paymentForm">
+
+        <h2>Selected Plan: </h2>
+        <div class="hide basicPlan"><h3>Basic FREE </h3></div>
+        <div class="hide premiumPlan"><h3>Premium $10/mo</h3></div>
+        <div class="hide enterprisePlan"><h3>Enterprise $50/mo</h3></div>
+
+        <!-- Div for the Free Plan -->
+        <div id="basicPlanUpdate" class="hide">
+          <div class="<%= "hide" if @plan.pid == 0 %>">
+            <h5>Are You sure you want to update your subscription information?</h5>
+            <br>
+            <%= form_tag(subscription_path(@user), method: "PATCH", id: "updateWithCurrentCard") do %>
+              <%= hidden_field_tag :plan, 0 %>
+              <div class="col-md-12">
+                <div class="" style="width: 60%; margin: 0px auto; text-align: center;">
+                  <%= submit_tag "Update Subscription", class: 'btn btn-lg ' %>
+                </div>
+              </div>
+            <% end%>
+          </div>
+          <br>
+          <br>
+          <br>
+        </div>
+        
+
+        <div id="CardInfo" class="hide">
+          <!-- Div for using existing card info -->
+          <div id="existingCardInfo" class="<%= "hide" if @user.stripe_id.nil?  %>">
+            <%= form_tag(subscription_path(@user), method: "PATCH", id: "updateWithCurrentCard") do %>
+              <h2>Use Existing card</h2>
+              <div><%= label_tag :current_card_number %>
+                <%= text_field_tag :number, nil, class: 'form-control', autocomplete: 'off', placeholder: "************" + (@card[:last4] || "****")  %>
+              </div>
+              <%= hidden_field_tag :plan, @plan.pid, id: "user_plan" %>
+              <%= hidden_field_tag :use_existing_card, "1" %>
+              <br>
+              <div class="" style="width: 60%; margin: 0px auto; text-align: center;">
+                <%= submit_tag "Update Subscription", class: 'btn btn-lg' %>
+              </div>
+            <% end%>
+            <br>
+          </div>
+
+        
+          <!-- form for using existing card info -->
+          <%= form_tag(subscription_path(@user), method: "PATCH", id: "new_user") do %>
+            <noscript>
+              <p>This form requires Javascript to use</p>
+            </noscript>
+
+            <div id="credit-card" style="display:block" class="">
+              <div id="credit-card-errors" style="display:none">
+                <div id="stripe-error-message" class="alert-message block-message error">
+                </div>
+              </div>
+
+              <div>
+                <h2>Enter Billing information</h2>
+              </div>
+
+              <!-- these fields are disabled before submission and are never transmitted back to rails -->
+
+              <h3><span class="payment-errors" style="color: red; text-align: center"></span></h3>
+
+              <div><%= label_tag :credit_card_number %>
+               <%= text_field_tag :number, nil, class: 'form-control', autocomplete: 'off' %></div>
+
+              <br>
+              <div><%= label_tag :cvc, "Security code (CVC)" %>
+               <%= text_field_tag :cvc, nil, class: 'form-control', autocomplete: 'off' %></div>
+
+              <br>
+              <div class="field">
+                <%= label_tag :card_month, "Card Expiration" %>
+                <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: 'exp_year', id: "exp_year", class: 'form-control'}%>
+                <%= select_month nil, {add_month_numbers: true}, {name: 'exp_month', id: "exp_month", class: 'ccExp form-control'} %>
+              </div>
+
+              <div class="note">
+                Your credit card details will be sent directly to our payment processor
+              </div>
+
+            </div>
+            <div>
+              <%= hidden_field_tag :plan, @plan.pid, id: "user_plan" %>
+              <%= hidden_field_tag :stripeToken, nil, id: "user_stripe_tok" %>
+            </div>
+            <br>
+
+            <div class="" style="width: 60%; margin: 0px auto; text-align: center;">
+              <%= submit_tag "Update Subscription", class: 'btn btn-lg' %>
+            </div>
+            <br>
+            <br>
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
