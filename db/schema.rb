@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140513215016) do
+ActiveRecord::Schema.define(version: 20140520185329) do
 
   create_table "assigned_wikis", force: true do |t|
     t.integer  "user_id"
     t.integer  "wiki_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "editor",     default: true
   end
 
   create_table "plans", force: true do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140513215016) do
     t.string   "stripe_id"
     t.integer  "plan"
     t.string   "stripe_tok"
+    t.string   "role"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

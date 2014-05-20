@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
 
   has_many :created_wiki, :class_name => "Wiki", :foreign_key => :creator_id
 
+  def role?(base_role)
+    role == base_role.to_s
+  end
+
 
   def login=(login)
     @login = login
