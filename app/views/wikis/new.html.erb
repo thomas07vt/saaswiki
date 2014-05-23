@@ -1,26 +1,36 @@
 <%= javascript_include_tag '/EpicEditor-v0.2.2/js/epiceditor.js' %>
 
-<script>
-  $(document).ready(function() {
-    var editor = new EpicEditor({ container: 'epiceditor', basePath: '', theme: { base: '/EpicEditor-v0.2.2/themes/base/epiceditor.css', preview: '/EpicEditor-v0.2.2/themes/preview/github.css', editor: '/EpicEditor-v0.2.2/themes/editor/epic-light.css' } });
-    editor.load();
-    var text = document.getElementById("wiki_body").value;
-    editor.importFile(null, text);
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+      window.epiceditor = new EpicEditor({ container: 'epiceditor', basePath: '', theme: { base: '/EpicEditor-v0.2.2/themes/base/epiceditor.css', preview: '/EpicEditor-v0.2.2/themes/preview/github.css', editor: '/EpicEditor-v0.2.2/themes/editor/epic-light.css' } });
+      epiceditor.load();
+      var text = document.getElementById("wiki_body").value;
+      epiceditor.importFile(null, text);
 
-    jQuery(function($) {
-      $('#new_wiki').submit(function(event) {
-        $('#wiki_body').val(editor.exportFile())
-      });
+      // For whatever reason, this doesn't seem to work, so I have to use an onclick function
+      // jQuery(function($) {
+      //   $('#new_wiki').submit(function(event) {
+      //     event.preventDefault();
+      //     //$('#wiki_body').val(epiceditor.exportFile());
+      //     return false;
+      //   });
+      // });
     });
-  });
-</script>
+
+    function submitWikiForm() {
+        $('#wiki_body').val(epiceditor.exportFile()); 
+        $('#new_wiki').submit(); 
+      }
+  </script>
+<% end%>
 
 
 <div class="container">
   <br>
   <div class="col-md-12">
     
-    <%= form_for [@wiki] do |f| %>
+    <%= form_for [@wiki], html: { :id => "new_wiki" } do |f| %>
       <% if @wiki.errors[:title].any?  %>
         <div class="alert alert-danger">
           <h4>There are <%= pluralize(@wiki.errors[:title].count, "error") %>.</h4>
@@ -41,10 +51,18 @@
         </div>
       </div>
       <br>
+      <div >
+      <% if !@user.role?(:basic) %>
+        <%= f.label :public, class: 'checkbox' do %>
+          <%= f.check_box :public, style: 'margin-left: 0px; margin-right: 3px;' %> Is Public
+        <% end %>
+      <% end %>
+      </div>
       <div class="form-group ">
-        <%= f.submit "Save Wiki", class: 'btn btn-success btn-lg' %>
+        <%# f.submit "Save Wiki", class: 'btn btn-success btn-lg', id: 'btn_save_wiki' %>
       </div>
     <% end %>
+        <%= link_to t(:save_wiki), '#', :onclick => "submitWikiForm();", :type => "button", :class => "btn btn-lg" %>
 
   </div>
 </div>

@@ -4,8 +4,6 @@ ruby '2.1.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
@@ -67,6 +65,7 @@ group :development, :test do
   gem "meta_request"
   gem "quiet_assets"
   gem "ffaker"
+  gem 'sqlite3'
 end
 
 gem "rspec-rails"
@@ -76,4 +75,5 @@ gem "factory_girl_rails"
 gem "database_cleaner"
 group :production do
   gem "rails_12factor"
+  gem 'pg'
 end

@@ -1,19 +1,23 @@
 Saaswiki::Application.routes.draw do
   get "subscriptions/finalize"
 
-
   devise_for :users, :controllers => {registrations: "registrations" }
   
-
-  resources :subscriptions, only: [:new, :create, :cancel, :update, :edit]
+  resources :subscriptions, only: [:new, :create, :update, :edit]
 
   resource :dashboard, only: [:show]
+
+  #resources :assigned_wikis, only: [:new, :create, :destroy, :update]
 
   resources :users, only: [:show, :update] do
     resources :wikis, only: [:index]
   end
 
-  resources :wikis
+  resources :wikis do
+    resources :assigned_wikis, only: [:new, :create, :destroy, :update]
+  end
+  
+  get "wikis/:id/access", to: 'wikis#access', as: 'wiki_access'
 
   resources :charges, only: [:new, :create]
 
@@ -24,5 +28,4 @@ Saaswiki::Application.routes.draw do
 
   root to: 'home#index'
   
-
 end

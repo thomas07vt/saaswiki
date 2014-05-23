@@ -1,6 +1,11 @@
 <div class="col-md-6">
   <div class="portfolio-item">
     <div class="portfolio-image" style="width: 100%; height: 300px;">
+      <% if !wikithumb.public %>
+        <div class="ribbon-wrapper">
+          <div class="price-ribbon ribbon-green">Private</div>
+        </div>
+      <% end %>
         <small>
           <br>
           <div id="show-wiki-body">

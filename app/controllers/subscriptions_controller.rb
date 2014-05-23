@@ -25,7 +25,13 @@ class SubscriptionsController < ApplicationController
       :plan => @plan.name
     )
 
-    @user.update_attributes(stripe_id: customer.id, plan: @plan.pid)
+    if @plan.pid == 0
+      role = :basic
+    else
+      role = :premium
+    end
+
+    @user.update_attributes(stripe_id: customer.id, plan: @plan.pid, role: role)
 
     flash[:success] = "You have successfully sign up for for the #{@plan.name.titleize}!"
     redirect_to dashboard_path # or wherever
@@ -37,7 +43,6 @@ class SubscriptionsController < ApplicationController
     flash[:error] = e.message
     redirect_to new_charge_path
   end
-
 
   def finalize
     @user = User.find(current_user.id)
@@ -51,7 +56,7 @@ class SubscriptionsController < ApplicationController
     # Abort if the token is not set
     if token.nil? || token.length < 2
       flash[:error] = "There was an error processing your credit card information. Please update your credit card information, but in the meantime enjoy our free subscription!"
-      @user.update_attributes(plan: 0, stripe_tok:  nil)
+      @user.update_attributes(plan: 0, stripe_tok:  nil, role: :basic)
       return redirect_to authenticated_root_path
     end
 
@@ -65,7 +70,7 @@ class SubscriptionsController < ApplicationController
       plan: @plan.name
     )
 
-    @user.update_attributes(stripe_id: customer.id, plan: @plan.pid, stripe_tok: nil)
+    @user.update_attributes(stripe_id: customer.id, plan: @plan.pid, stripe_tok: nil, role: :premium)
 
     flash[:success] = "You have successfully sign up for for the #{@plan.name.titleize}!"
     redirect_to dashboard_path
@@ -75,7 +80,7 @@ class SubscriptionsController < ApplicationController
   # This `rescue block` catches and displays those errors.
   rescue Stripe::CardError => e
     flash[:error] = "There was an error processing your credit card information. Please update your credit card information, but in the meantime enjoy our free subscription! " + e.message
-    @user.update_attributes(plan: 0, stripe_tok: nil)
+    @user.update_attributes(plan: 0, stripe_tok: nil, role: :basic)
     redirect_to new_charge_path
   end
 
@@ -112,7 +117,7 @@ class SubscriptionsController < ApplicationController
         customer.delete
       end
       # Update customer info
-      @user.update_attributes(stripe_id: nil, plan: newplan.pid, stripe_tok: nil)
+      @user.update_attributes(stripe_id: nil, plan: newplan.pid, stripe_tok: nil, role: :basic)
 
     # Update Customer subscription with the same card (do nothing if they selected the same card and the same plan).
     elsif (use_old_card && !@user.stripe_id.nil? && newplan.pid != @user.plan)
@@ -123,7 +128,7 @@ class SubscriptionsController < ApplicationController
       subscription.save
 
       # Update customer info
-      @user.update_attributes(plan: newplan.pid)
+      @user.update_attributes(plan: newplan.pid, role: :premium)
 
     elsif !use_old_card # Update user plan and card info
       # If the customer already exits, We need to update his plan, otherwise we need to create a stripe customer.
@@ -145,7 +150,7 @@ class SubscriptionsController < ApplicationController
         )
       end
       # Update customer info
-      @user.update_attributes(stripe_id: customer.id, plan: newplan.pid)
+      @user.update_attributes(stripe_id: customer.id, plan: newplan.pid, role: :premium)
     else
     end
 

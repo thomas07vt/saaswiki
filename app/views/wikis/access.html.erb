@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="col-md-12">
+    <h3>Add or remove collaborators for "<%= @wiki.title %>"</h3>
+  </div>
+  <div class="col-md-12">
+    <div class="" style="width: 100%; margin: 0px auto;">
+      <table class="table table-bordered col-md-12" style="background-color: white;">
+        <thead>
+          <tr class="">
+              <th class="text-center"><h4>Username</h4></th>
+              <th class="text-center"><h4>Email</h4></th>
+              <th class="text-center"><h4>Editor?</h4></th>
+          </tr>
+        </thead>
+        <tbody id="assignedWikiBody">
+            <%= render partial: "assigned_wikis/assigned_wiki", collection: @assigned_wikis %>
+            <tr id="newAssignedWiki" class="hide">
+              <td id="newAssignedWikiTD" class="text-center" colspan="3" style="padding-top: 25px;">
+
+                <%= form_tag(wiki_assigned_wikis_path(@wiki), method: :create, id: "newCollaborator") do %>
+
+                  <div class="col-md-10">
+                    <div class="col-md-3" style="padding-top: 5px;">
+                      <%= label_tag :collaborator_username %>:
+                    </div>
+                    <div class="col-md-7">
+                      <%= text_field_tag :username, nil, class: 'form-control', autocomplete: 'off', placeholder: "Username" %>
+                    </div>
+                    <div class="col-md-2" style="padding-top: 5px;">
+                      <div style="float: left; margin-top: 2px;">
+                        <%= label_tag :editor? %>
+                      </div>
+                      <div>
+                        <%= check_box_tag 'editor' %>
+                      </div>                      
+                    </div>
+                    
+                  </div>
+                  <div class="form-group col-md-2" style="overflow: hidden;">
+                    <%= submit_tag "Add Collaborator", class: 'btn btn-success' %>
+                  </div>
+                <% end%>
+
+              </td>
+            </tr>
+            <tr>
+              <td class="text-center" colspan="3">
+                <%= link_to "Add New Collaborator", new_wiki_assigned_wiki_path(@wiki), remote: true, class: 'btn btn-success' %>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

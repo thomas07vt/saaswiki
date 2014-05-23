@@ -12,12 +12,6 @@ class ApplicationPolicy
 
   def show?
     scope.where(:id => record.id).exists?
-    if (resource.public == true)
-      user.present? && scope.where(:id => record.id).exists?
-    else
-      # Only show private Wiki's to Wiki creator or collaborators
-      user.present? && (record.creator == user ||  record.users.where(id: user.id).exists?)
-    end
   end
 
   def create?
@@ -30,7 +24,7 @@ class ApplicationPolicy
 
   def update?
     # A Wiki can only be updated by the Wiki creator or an editing collaborator.
-    user.present? && (record.creator == user ||  record..assigned_wikis.where(user_id: user.id).where(editor: true))
+    user.present? && (record.creator == user ||  record.assigned_wikis.where(wiki_id: record.id).where(editor: true))
   end
 
   def edit?

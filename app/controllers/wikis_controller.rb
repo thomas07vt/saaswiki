@@ -28,7 +28,7 @@ class WikisController < ApplicationController
       redirect_to wiki_path(@wiki)
     else
       flash[:error] = 'There was a problem saving the Wiki. Please try again.'
-      render :new
+      redirect_to new_wiki_path()
     end
 
   end
@@ -42,7 +42,6 @@ class WikisController < ApplicationController
   def update
     @user = current_user
     @wiki = Wiki.find(params[:id])
-    @wiki.creator_id = @user.id
     authorize(@wiki)
 
     if @wiki.update_attributes(wiki_params)
@@ -54,8 +53,27 @@ class WikisController < ApplicationController
     end
   end
 
-  private 
+  def destroy
+    @wiki = Wiki.find(params[:id])
+    authorize(@wiki)
 
+    if @wiki.destroy
+      flash[:notice] = "\"#{@wiki.title}\" was successfully deleted."
+      redirect_to root_path
+    else
+      flash[:error] = "There was an error deleting the Wiki. Please try again."
+      redirect_to wiki_path(@wiki)
+    end
+  end
+
+  def access
+    @user = current_user
+    @wiki = Wiki.find(params[:id])
+    @assigned_wikis = AssignedWiki.where(wiki_id: @wiki.id)
+    authorize(@wiki)
+  end
+
+  private 
   def wiki_params
     params.require(:wiki).permit(:title, :body, :public)
   end

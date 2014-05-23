@@ -59,3 +59,16 @@
   float: right;
 }
 
+html, body {
+  height: 100%;
+}
+
+main {
+  margin-bottom: -297px;
+  min-height: 92%;
+}
+
+.footer {
+  display: inline-block;
+  width: 100%;
+}

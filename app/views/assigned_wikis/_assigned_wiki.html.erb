@@ -1,0 +1,21 @@
+<tr>
+  <td class="text-center">
+    <div class="col-md-12">
+      <div class="col-md-10">
+        <%= "#{assigned_wiki.user.username}  " %>
+      </div>
+      <div class="col-md-2" style="padding-top: 1px;">
+        <%= link_to [@wiki, assigned_wiki], method: :delete, style: 'color: #D9534F; border-color: #D9534F;' do %>
+          <span class="glyphicon glyphicon-remove"></span>
+        <% end %>
+      </div>
+    </div>
+  </td>
+  <td class="text-center"><%= assigned_wiki.user.email %></td>
+  <td class="text-center">
+    <%= form_tag wiki_assigned_wiki_path(@wiki.id, assigned_wiki.id), remote: true, method: :patch, id: "edit_assigned_wiki_#{assigned_wiki.id}" do %>
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>      
+      <%= check_box("assigned_wiki", "editor", options = {onclick: "$('#edit_assigned_wiki_#{assigned_wiki.id}').submit()", checked: assigned_wiki.editor}, checked_value = "1", unchecked_value = "0") %>
+    <% end %>
+  </td>
+</tr>
