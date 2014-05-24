@@ -14,10 +14,10 @@ Saaswiki::Application.routes.draw do
   end
 
   resources :wikis do
-    resources :assigned_wikis, only: [:new, :create, :destroy, :update]
+    resources :assigned_wikis, only: [:new, :create, :destroy, :update, :index]
   end
   
-  get "wikis/:id/access", to: 'wikis#access', as: 'wiki_access'
+  # get "wikis/:id/access", to: 'wikis#access', as: 'wiki_access'
 
   resources :charges, only: [:new, :create]
 

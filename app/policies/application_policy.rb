@@ -24,7 +24,7 @@ class ApplicationPolicy
 
   def update?
     # A Wiki can only be updated by the Wiki creator or an editing collaborator.
-    user.present? && (record.creator == user ||  record.assigned_wikis.where(wiki_id: record.id).where(editor: true))
+    user.present? && (record.creator == user || record.assigned_wikis.where(editor: true).users.where(id: user.id).exists?)
   end
 
   def edit?

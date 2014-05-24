@@ -17,29 +17,30 @@
             <tr id="newAssignedWiki" class="hide">
               <td id="newAssignedWikiTD" class="text-center" colspan="3" style="padding-top: 25px;">
 
-                <%= form_tag(wiki_assigned_wikis_path(@wiki), method: :create, id: "newCollaborator") do %>
+                <%= form_for @collaborator, url: wiki_assigned_wikis_path(@wiki), method: :create, id: "newCollaborator_old"  do |f| %>
 
                   <div class="col-md-10">
                     <div class="col-md-3" style="padding-top: 5px;">
-                      <%= label_tag :collaborator_username %>:
+                      <%= f.label :collaborator_username %>:
                     </div>
                     <div class="col-md-7">
-                      <%= text_field_tag :username, nil, class: 'form-control', autocomplete: 'off', placeholder: "Username" %>
+                      <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: "Username" %>
                     </div>
                     <div class="col-md-2" style="padding-top: 5px;">
                       <div style="float: left; margin-top: 2px;">
-                        <%= label_tag :editor? %>
+                        <%= f.label :editor? %>
                       </div>
                       <div>
-                        <%= check_box_tag 'editor' %>
+                        <%= f.check_box :editor %>
                       </div>                      
                     </div>
                     
                   </div>
                   <div class="form-group col-md-2" style="overflow: hidden;">
-                    <%= submit_tag "Add Collaborator", class: 'btn btn-success' %>
+                    <%= f.submit "Add Collaborator", class: 'btn btn-success' %>
                   </div>
-                <% end%>
+
+                <% end %>
 
               </td>
             </tr>

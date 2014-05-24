@@ -1,42 +1,35 @@
+
+
 class AssignedWikisController < ApplicationController
   respond_to :html, :js
 
+  def index
+    @user = current_user
+    @wiki = Wiki.find(params[:wiki_id])
+    @assigned_wikis = AssignedWiki.where(wiki_id: @wiki.id)
+    @collaborator = Collaborator.new
+    authorize(@assigned_wikis)
+  end
+
   def new
     @wiki = Wiki.find(params[:wiki_id])
-    @assignedwiki = AssignedWiki.new
-    @assignedwiki.wiki_id = @wiki.id
-
-    respond_with(@assignedwiki) do |f|
-      f.html { redirect_to wiki_access_path(@wiki.id) }
+    respond_with() do |f|
+      f.html { redirect_to wiki_assigned_wikis_path(@wiki.id) }
     end
   end
 
   def create
-    #TODO form object
-    @username = params[:username]
-    @wiki = Wiki.find(params[:wiki_id])
-    @users = User.where(username: params[:username])
-    if @users.any?
-      @collaborator = @users[0]
-    else
-      # Throw some error
-      flash[:error] = "The username: '#{@username}' does not exist."
-      return redirect_to wiki_access_path(@wiki)
-    end
 
-    @assignedwiki = AssignedWiki.new
-    @assignedwiki.user_id = @collaborator.id
-    @assignedwiki.wiki_id = @wiki.id
-    @assignedwiki.editor = params[:editor]
-
-    #authorize(@todo)
-    if @assignedwiki.save
-    else
+    @collaborator = Collaborator.new(collaborator_params)
+    @assignedwiki = @collaborator.create(params)
+    authorize(@assignedwiki)
+    
+    if !@assignedwiki.save
       flash[:error] = "There was an error while adding '#{@username}' as a collaborator."
     end
 
     respond_with(@assignedwiki) do |f|
-      f.html { redirect_to wiki_access_path(@wiki) }
+      f.html { redirect_to wiki_assigned_wikis_path(@assignedwiki.wiki_id) }
     end
 
   end
@@ -46,10 +39,10 @@ class AssignedWikisController < ApplicationController
     authorize(@assignedWiki)
 
     if @assignedWiki.update_attributes(assigned_wiki_params)
-      redirect_to wiki_access_path(@assignedWiki.wiki_id)
+      redirect_to wiki_assigned_wikis_path(@assignedWiki.wiki_id)
     else
       flash[:error] = 'There was a problem updating the Wiki. Please try again.'
-      redirect_to wiki_access_path(@assignedWiki.wiki_id)
+      redirect_to wiki_assigned_wikis_path(@assignedWiki.wiki_id)
     end
 
   end
@@ -60,15 +53,19 @@ class AssignedWikisController < ApplicationController
 
     if @assigned_wiki.destroy
       flash[:notice] = "\"#{@assigned_wiki.user.username}\" was successfully removed."
-      redirect_to wiki_access_path(@assigned_wiki.wiki) 
+      redirect_to wiki_assigned_wikis_path(@assigned_wiki.wiki) 
     else
       flash[:error] = "There was an error removing \"#{@assigned_wiki.user.username}\". Please try again."
-      redirect_to wiki_access_path(@assigned_wiki.wiki)
+      redirect_to wiki_assigned_wikis_path(@assigned_wiki.wiki)
     end
   end
 
   private 
   def assigned_wiki_params
     params.require(:assigned_wiki).permit(:editor, :wiki_id, :user_id)
+  end
+
+  def collaborator_params
+    params.require(:collaborator).permit(:username, :editor)
   end
 end

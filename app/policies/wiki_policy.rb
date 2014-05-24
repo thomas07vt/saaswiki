@@ -19,6 +19,11 @@ class WikiPolicy < ApplicationPolicy
     end
   end
 
+  def update?
+    # A Wiki can only be updated by the Wiki creator or an editing collaborator.
+    user.present? && (record.creator == user || record.assigned_wikis.where(editor: true).users.where(id: user.id).exists?)
+  end
+
   def create?
     # A user must not have a free account to create private wiki's
     if (record.public == true)

@@ -66,13 +66,6 @@ class WikisController < ApplicationController
     end
   end
 
-  def access
-    @user = current_user
-    @wiki = Wiki.find(params[:id])
-    @assigned_wikis = AssignedWiki.where(wiki_id: @wiki.id)
-    authorize(@wiki)
-  end
-
   private 
   def wiki_params
     params.require(:wiki).permit(:title, :body, :public)

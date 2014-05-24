@@ -12,4 +12,8 @@ class AssignedWikiPolicy < ApplicationPolicy
     create?
   end
 
+  def show?
+    scope.where(:id => record.id).exists?
+  end
+
 end
