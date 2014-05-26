@@ -5,6 +5,11 @@
     <small style="margin-left: 3px;">
       Created by <%= link_to @creator.username, @creator %> <%= time_ago_in_words(@wiki.created_at) %> ago.
     </small>
+    <br>
+    <small style="margin-left: 3px;">
+      Status: <span style="<%= "color: #5CB85C" unless @wiki.public%>"><%= @wiki.status.titleize %></span>
+      </span>
+    </small>
   </div>
   <div class="col-md-3" style="margin-top: 20px; text-align: right;" >
     <% if policy(@wiki).edit? %>
@@ -19,5 +24,24 @@
   <br>
   <div id="show-wiki-body">
     <%= markdown(@wiki.body) %>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <small>
+      <h2>Collaborators</h2>  
+      </small>
+    
+      <div class="col-md-10">
+        <div class="col-md-12">
+          <%= @creator.username %>
+        </div>
+        <%= render partial: "assigned_wikis/collaborator", collection: @assigned_wikis %>
+      </div>
+      <div class="col-md-2">
+        <% if policy(@wiki).access? %>
+          <%= link_to "Add Collaborators", wiki_assigned_wikis_path(@wiki), class: 'btn btn-success'%>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

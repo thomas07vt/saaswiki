@@ -17,9 +17,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     if (params[:HTTP_REFERRER])
-      redirect_to :back, alert: "You are not authorized to perform that action. " + exception.message
+      flash[:alert] = "You are not authorized to perform that action. "
+      redirect_to :back
     else
-      redirect_to root_path, alert: "You are not authorized to perform that action. " + exception.message
+      flash[:error] = "You are not authorized to perform that action. "
+      redirect_to root_path
     end
   end
 

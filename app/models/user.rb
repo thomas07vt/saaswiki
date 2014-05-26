@@ -25,6 +25,30 @@ class User < ActiveRecord::Base
     @login || self.username || self.email
   end
 
+  def wikis_created
+    Wiki.where(creator_id: self.id)
+  end
+
+  def public_wikis_created
+    Wiki.where(creator_id: self.id).where(public: true)
+  end
+
+  def private_wikis_created
+    Wiki.where(creator_id: self.id).where(public: false)
+  end
+
+  def wikis_shared_with_user
+    self.wikis
+  end
+
+  def recently_active_wikis
+    all_wikis = Wiki.where(creator_id: self.id)
+    all_wikis.push(*self.wikis.to_a)
+    all_wikis.sort_by! {|wiki| wiki.updated_at}
+    all_wikis.reverse!
+  end
+
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)

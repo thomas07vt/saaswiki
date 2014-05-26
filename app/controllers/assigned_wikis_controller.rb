@@ -21,11 +21,12 @@ class AssignedWikisController < ApplicationController
   def create
 
     @collaborator = Collaborator.new(collaborator_params)
-    @assignedwiki = @collaborator.create(params)
+    collaborator_info = @collaborator.create(params)
+    @assignedwiki = collaborator_info[:assigned_wiki]
     authorize(@assignedwiki)
     
     if !@assignedwiki.save
-      flash[:error] = "There was an error while adding '#{@username}' as a collaborator."
+      flash[:error] = "There was an error while adding the collaborator. #{collaborator_info[:error]}" 
     end
 
     respond_with(@assignedwiki) do |f|

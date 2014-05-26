@@ -1,8 +1,8 @@
 <div class="section section-breadcrumbs">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
-        <h1>My Wiki's</h1>
+      <div class="col-sm-12">
+        <h1>My Wikis</h1>
       </div>
     </div>
   </div>
@@ -10,14 +10,14 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <% if @wikis.any? %>
         <!-- Add All Wiki's here -->
         <%= render partial: 'wikis/wikithumb', collection: @wikis %>
         <!-- End Wiki's -->
       <% else %>
 
-        <div class="col-md-12">
+        <div class="col-sm-12">
           <div style="width: 80%; margin: 0px auto; text-align: center;">
             <h3>You haven't created any Wiki's yet.</h3>
             <br>

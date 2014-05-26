@@ -28,6 +28,15 @@
 
 <div class="container">
   <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="col-md-2" style="float: right;">
+        <%= link_to :back, class: 'btn btn-success', style: 'margin-top: 20px; margin-bottom: 10px; float: right; background-color: #5CB85C; border-color: #4CAE4C;', data: { no_turbolink: true } do %>
+        <span class="glyphicon glyphicon-arrow-left"> Go Back</span>
+      <% end %>
+      </div>
+    </div>
+  </div>
   <div class="col-md-12">
     
     <%= form_for [@wiki] do |f| %>
@@ -51,11 +60,37 @@
         </div>
       </div>
       <br>
-      <div class="form-group ">
-        <%# f.submit "Save Wiki", class: 'btn btn-success btn-lg' %>
+      <div >
+      <% if !@user.role?(:basic) %>
+        <%= f.label :public, class: 'checkbox' do %>
+          <%= f.check_box :public, style: 'margin-left: 0px; margin-right: 3px;' %> Is Public
+        <% end %>
+      <% end %>
       </div>
     <% end %>
     <%= link_to t(:save_wiki), '#', :onclick => "submitWikiForm();", :type => "button", :class => "btn btn-lg" %>
+    <% if policy(@wiki).destroy? %>
+      <%= link_to "Delete Wiki", [@wiki], method: :delete, class: 'btn-danger btn btn-lg', style: 'background-color: #D9534F; border-color: #D9534F;', data: { confirm: 'Are you sure you want to delete this wiki?' } %>
+    <% end %>
 
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <small>
+      <h2>Collaborators</h2>
+      </small>
+    
+      <div class="col-md-10">
+        <div class="col-md-12">
+          <%= @wiki.creator.username %>
+        </div>
+        <%= render partial: "assigned_wikis/collaborator", collection: @assigned_wikis %>
+      </div>
+      <div class="col-md-2">
+        <% if policy(@wiki).access? %>
+          <%= link_to "Add Collaborators", wiki_assigned_wikis_path(@wiki), class: 'btn btn-success'%>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

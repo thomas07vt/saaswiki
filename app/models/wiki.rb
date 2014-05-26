@@ -6,4 +6,12 @@ class Wiki < ActiveRecord::Base
 
   validates :title, length: { minimum: 3 }, presence: true
   validates :body, presence: true
+
+  def status
+    if !self.public
+      "private"
+    else
+      "public"
+    end
+  end
 end

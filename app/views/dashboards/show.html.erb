@@ -1,3 +1,91 @@
-<h1>Dashboards#show</h1>
-<%= link_to "My Wiki's", user_wikis_path(@user), class: 'btn btn-primary btn-lg' %>
-<%= link_to "New Wiki", new_wiki_path, class: 'btn btn-primary btn-lg', data: { no_turbolink: true } %>
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(function() {
+      $('user_rating_positve').click(function() {
+        $('some_div').show();
+      }
+    });
+  </script>
+  <script type="text/javascript" src="https://www.google.com/jsapi">
+  </script>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Wikis Created', 'Count'],
+        ['Public Wikis Created',  <%= @user.public_wikis_created.count %>],
+        ['Private Wikis Created',  <%= @user.private_wikis_created.count %>],
+        ['Wikis You Collaborate On',  <%= @user.wikis_shared_with_user.count %>]
+      ]);
+
+      var options = {
+        title: '',
+        backgroundColor: 'transparent'
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
+  </script>
+<% end %>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="col-md-12">
+        <h2><%= @user.username %></h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+        <div class="col-md-4">
+          <div class="col-md-12">
+            Email: <%= @user.email %>        
+          </div>
+          <div class="col-md-12">
+            Signed Up <%= time_ago_in_words(@user.created_at) %> ago        
+          </div>
+          <div class="col-md-12">
+            Selected Plan:     
+          </div>
+          <div class="col-md-12">
+            <div class="loginpricingdiv" style="margin: 0px; max-width: 200px;">
+                <div class="pricing-wrapper">
+                  <div class="pricing-plan" style="width: 100%;">
+                    <div class="ribbon-wrapper">
+                      <div class="price-ribbon ribbon-green">Selected</div>
+                    </div>
+                    <h2 class="pricing-plan-title"><%= @plan.name.titleize %></h2>
+                    <div class="pricing-plan-price"><%= @plan.cost %></div>
+                    <%= link_to "Change Plan", edit_subscription_path(@user), class: "btn", data: { no_turbolink: true } %>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8" style="display: inline-block;">
+          <div class="<%= "hide" if @user.recently_active_wikis.any? %>" style="width: 80%; margin: 0px auto; text-align: center;">
+            <h3>You haven't created any Wiki's yet.</h3>
+            <br>
+            <%= link_to "Create First Wiki", new_wiki_path, class: 'btn btn-primary btn-lg', data: { no_turbolink: true } %>
+          </div>
+          <div class="col-md-12" style="height: 400px;" id="piechart" >
+          </div>
+        </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="col-md-12">
+        <h2>Recently Active Wikis</h2>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <%= render partial: "wikis/recently_updated", collection: @user.recently_active_wikis %>
+  </div>
+</div>
+

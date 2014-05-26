@@ -8,6 +8,7 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     @creator = @wiki.creator
+    @assigned_wikis = AssignedWiki.where(wiki_id: @wiki)
     authorize(@wiki)
   end
 
@@ -36,6 +37,7 @@ class WikisController < ApplicationController
   def edit
     @user = current_user
     @wiki = Wiki.find(params[:id])
+    @assigned_wikis = AssignedWiki.where(wiki_id: @wiki)
     authorize(@wiki)
   end
 

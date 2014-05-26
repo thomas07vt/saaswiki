@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
       @plan = Plan.where(pid: planid).first
     end
     @price = @plan.cost
-    
+
   end
 
 
