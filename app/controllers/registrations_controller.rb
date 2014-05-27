@@ -44,4 +44,25 @@ class RegistrationsController < Devise::RegistrationsController
   def update
     super
   end
+
+  # DELETE /resource
+  def destroy
+    stripe_cleanup(resource)
+    resource.destroy
+    Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
+    set_flash_message :notice, :destroyed if is_flashing_format?
+    yield resource if block_given?
+    respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
+  end
+
+  def stripe_cleanup(resource)
+    # Cancel Stripe account if one exists
+    stripe_service = StripeService.new(resource.id)
+    stripe_service.cancel
+
+  rescue
+    # Just continue
+  end
+
+
 end 

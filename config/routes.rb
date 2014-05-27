@@ -3,7 +3,7 @@ Saaswiki::Application.routes.draw do
 
   devise_for :users, :controllers => {registrations: "registrations" }
   
-  resources :subscriptions, only: [:new, :create, :update, :edit]
+  resources :subscriptions, only: [:update, :edit]
 
   resource :dashboard, only: [:show]
 

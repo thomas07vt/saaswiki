@@ -24,7 +24,7 @@
                 <li><strong>Unlimited</strong> projects</li>
                 <li><strong>2GB</strong> storage</li>
               </ul>
-              <span class="btn" id="2">Current Plan</span>
+              <span class="btn subscriptionUpdate" id="<%= @plan.pid %>">Current Plan</span>
             </div>
           </div>
       </div>
@@ -120,7 +120,7 @@
             <%= form_tag(subscription_path(@user), method: "PATCH", id: "updateWithCurrentCard") do %>
               <h2>Use Existing card</h2>
               <div><%= label_tag :current_card_number %>
-                <%= text_field_tag :number, nil, class: 'form-control', autocomplete: 'off', placeholder: "************" + (@card[:last4] || "****")  %>
+                <%= text_field_tag :number, nil, class: 'form-control', autocomplete: 'off', placeholder: "************#{@last4 || "****"}"%>
               </div>
               <%= hidden_field_tag :plan, @plan.pid, id: "user_plan" %>
               <%= hidden_field_tag :use_existing_card, "1" %>
