@@ -66,13 +66,15 @@ group :development, :test do
   gem "quiet_assets"
   gem "ffaker"
   gem 'sqlite3'
+  gem "rspec-rails"
+  gem "capybara"
+  gem "capybara-webkit"
+  gem "factory_girl_rails"
+  gem "database_cleaner"
+
 end
 
-gem "rspec-rails"
-gem "capybara"
-gem "capybara-webkit"
-gem "factory_girl_rails"
-gem "database_cleaner"
+
 group :production do
   gem "rails_12factor"
   gem 'pg'
