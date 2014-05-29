@@ -8,7 +8,8 @@ class AssignedWikisController < ApplicationController
     @wiki = Wiki.find(params[:wiki_id])
     @assigned_wikis = AssignedWiki.where(wiki_id: @wiki.id)
     @collaborator = Collaborator.new
-    authorize(@assigned_wikis)
+
+    redirect_to wiki_path(@wiki) unless policy(@wiki).access?
   end
 
   def new
@@ -59,6 +60,10 @@ class AssignedWikisController < ApplicationController
       flash[:error] = "There was an error removing \"#{@assigned_wiki.user.username}\". Please try again."
       redirect_to wiki_assigned_wikis_path(@assigned_wiki.wiki)
     end
+  end
+
+  def username_suggestions
+    render json: UsernameSuggestion.terms_for(params[:term])
   end
 
   private 

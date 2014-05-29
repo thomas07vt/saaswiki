@@ -3,7 +3,9 @@
   <div class="col-md-9">
     <h1 style="margin-bottom: 0px;"><%= @wiki.title %></h1>
     <small style="margin-left: 3px;">
-      Created by <%= link_to @creator.username, @creator %> <%= time_ago_in_words(@wiki.created_at) %> ago.
+      <% if @creator %>
+        Created by <%= link_to @creator.username, @creator %> <%= time_ago_in_words(@wiki.created_at) %> ago.
+      <% end %>
     </small>
     <br>
     <small style="margin-left: 3px;">
@@ -33,7 +35,9 @@
     
       <div class="col-md-10">
         <div class="col-md-12">
-          <%= @creator.username %>
+          <% if @creator %>
+            <%= @creator.username %>
+          <% end %>
         </div>
         <%= render partial: "assigned_wikis/collaborator", collection: @assigned_wikis %>
       </div>

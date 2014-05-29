@@ -1,3 +1,14 @@
+<% content_for :head do %>
+  <script>
+    $(document).ready(function() {
+      $('#collaborator_username').autocomplete({
+        source: "/username_suggestions"
+      });
+    });
+  </script>
+<% end%>
+
+
 <div class="container">
   <div class="col-md-12">
     <div class="col-md-10">
@@ -32,7 +43,7 @@
                         <%= f.label :collaborator_username %>:
                       </div>
                       <div class="col-md-7">
-                        <%= f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: "Username" %>
+                        <%= f.text_field :username, class: 'form-control', placeholder: "Username" %>
                       </div>
                       <div class="col-md-2" style="padding-top: 5px;">
                         <div style="float: left; margin-top: 2px;">

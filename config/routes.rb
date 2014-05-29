@@ -1,6 +1,8 @@
 Saaswiki::Application.routes.draw do
   get "subscriptions/finalize"
 
+  get "username_suggestions", :to => "assigned_wikis#username_suggestions"
+
   devise_for :users, :controllers => {registrations: "registrations" }
   
   resources :subscriptions, only: [:update, :edit]

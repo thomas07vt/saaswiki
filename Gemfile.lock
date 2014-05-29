@@ -82,12 +82,14 @@ GEM
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
-    jquery-rails (3.1.0)
+    jquery-rails (2.3.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     jquery-turbolinks (2.0.2)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (4.2.1)
+      railties (>= 3.2.16)
     json (1.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -225,8 +227,9 @@ DEPENDENCIES
   figaro
   gravtastic
   jbuilder (~> 1.2)
-  jquery-rails
+  jquery-rails (~> 2.3.0)
   jquery-turbolinks
+  jquery-ui-rails
   meta_request
   pg
   pry-rails

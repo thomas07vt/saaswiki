@@ -8,20 +8,14 @@
       var text = document.getElementById("wiki_body").value;
       epiceditor.importFile(null, text);
 
-      // For whatever reason, this doesn't seem to work, so I have to use an onclick function
-      // jQuery(function($) {
-      //   $('#new_wiki').submit(function(event) {
-      //     event.preventDefault();
-      //     //$('#wiki_body').val(epiceditor.exportFile());
-      //     return false;
-      //   });
-      // });
+
+      jQuery(function($) {
+        $('#new_wiki').submit(function(event) {
+          $('#wiki_body').val(epiceditor.exportFile());
+        });
+      });
     });
 
-    function submitWikiForm() {
-        $('#wiki_body').val(epiceditor.exportFile()); 
-        $('#new_wiki').submit();
-      }
   </script>
 <% end%>
 
@@ -73,8 +67,7 @@
         <% end %>
       <% end %>
       </div>
+      <%= f.submit "Save Wiki", class: 'btn btn-lg' %>
     <% end %>
-        <%= link_to t(:save_wiki), '#', :onclick => "submitWikiForm();", :type => "button", :class => "btn btn-lg" %>
-
   </div>
 </div>
