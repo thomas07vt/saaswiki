@@ -50,7 +50,7 @@
             Signed Up <%= time_ago_in_words(@user.created_at) %> ago        
           </div>
           <div class="col-md-12">
-            Selected Plan:     
+            Selected Plan:
           </div>
           <div class="col-md-12">
             <div class="loginpricingdiv" style="margin: 0px; max-width: 200px;">
@@ -61,7 +61,7 @@
                     </div>
                     <h2 class="pricing-plan-title"><%= @plan.name.titleize %></h2>
                     <div class="pricing-plan-price"><%= @plan.cost %></div>
-                    <%= link_to "Change Plan", edit_subscription_path(@user), class: "btn", data: { no_turbolink: true } %>
+                    <%= link_to "Change Plan", edit_subscription_path(@user), class: "btn", data: { no_turbolink: true }, id: 'btnChangePlan' %>
                   </div>
                 </div>
             </div>
