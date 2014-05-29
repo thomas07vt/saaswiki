@@ -19,10 +19,12 @@ end
 feature 'User can Sign Up with Username, Email, and PW' do
   scenario 'Successfully' do
     visit new_user_registration_path
-    fill_in 'Username', with: 'userName'
-    fill_in 'Email', with: 'email@email.com'
-    fill_in 'Password', with: 'password1'
-    fill_in 'Password confirmation', with: 'password1'
+    within('#new_user') do 
+      fill_in 'user_username', with: 'userName'
+      fill_in 'user_email', with: 'email@email.com'
+      fill_in 'user_password', with: 'password1'
+      fill_in 'user_password_confirmation', with: 'password1'
+    end 
     click_button 'Sign up'
     current_path.should ==  authenticated_root_path
     expect(page).to have_content ' A message with a confirmation link has been sent to your email address.'

@@ -6,7 +6,7 @@ feature 'User can click Sign Out link in header' do
   scenario 'Successfully' do
     user = FactoryGirl.create(:user)
     login_as(user, :scope => :user) 
-    visit root_path
+    visit authenticated_root_path
     click_link('hSignOut')
     expect(page).to have_content "Signed out successfully."
   end
