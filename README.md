@@ -1,28 +1,14 @@
-== README
+# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### WikiWrite is a multi-user collaboration tool that allows users to create Wikis using Markdown and HTML syntax.
 
-Things you may want to cover:
+A live preview can be seen here:
+http://wikiwrite.herokuapp.com/
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+> Powered by EpicEditor
+> Stripe integration for payment processing
+> Redis integration for fast autocompletion
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Created by: John Thomas
+
