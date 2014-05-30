@@ -1,4 +1,7 @@
 class Wiki < ActiveRecord::Base
+  # extend FriendlyId
+  # friendly_id :title
+
   has_many :assigned_wikis, dependent: :destroy
   has_many :users, :through => :assigned_wikis
 

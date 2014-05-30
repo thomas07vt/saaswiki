@@ -59,6 +59,7 @@ gem "toastr-rails"
 gem "pundit"
 gem "figaro"
 gem "gravtastic"
+gem 'friendly_id'
 group :development, :test do
   gem "pry-rails"
   gem "better_errors"
