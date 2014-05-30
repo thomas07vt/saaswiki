@@ -84,3 +84,17 @@ main {
 .btn {
   line-height:normal!important; 
 }
+
+.hackySpan {
+  font-size: 1.2em; 
+  padding: 1.2em 1.5em; 
+  cursor: pointer; 
+  color: #999; 
+  display: inline-block; 
+  text-decoration: none;
+  display: block;
+}
+
+.hackySpan:hover {
+  color: #4F8DB3;
+}
