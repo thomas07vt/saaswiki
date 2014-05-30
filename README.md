@@ -6,7 +6,9 @@ A live preview can be seen here:
 http://wikiwrite.herokuapp.com/
 
 > Powered by EpicEditor
+
 > Stripe integration for payment processing
+
 > Redis integration for fast autocompletion
 
 
