@@ -67,13 +67,13 @@ html, body {
 
 main {
   /* Firefox */
-  min-height: -moz-calc(100% - 370px);
+  min-height: -moz-calc(100% - 316px);
   /* WebKit */
-  min-height: -webkit-calc(100% - 370px);
+  min-height: -webkit-calc(100% - 316px);
   /* Opera */
-  min-height: -o-calc(100% - 370px);
+  min-height: -o-calc(100% - 316px);
   /* Standard */
-  min-height: calc(100% - 370px);
+  min-height: calc(100% - 316px);
 }
 
 .footer {
