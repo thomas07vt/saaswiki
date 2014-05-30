@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-2">
         <% if policy(@wiki).access? %>
-          <%= link_to "Add Collaborators", wiki_assigned_wikis_path(@wiki), class: 'btn btn-success'%>
+          <%= link_to "Add Collaborators", wiki_assigned_wikis_path(@wiki), class: 'btn btn-success', data: { no_turbolink: true }%>
         <% end %>
       </div>
     </div>

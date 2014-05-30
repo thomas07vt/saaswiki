@@ -60,6 +60,7 @@ gem "pundit"
 gem "figaro"
 gem "gravtastic"
 gem 'friendly_id'
+gem 'redis'
 group :development, :test do
   gem "pry-rails"
   gem "better_errors"
