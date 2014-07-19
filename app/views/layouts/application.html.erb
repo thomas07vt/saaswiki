@@ -34,11 +34,27 @@
         <!-- Navigation & Logo-->
         <div class="mainmenu-wrapper">
           <div class="container">
-            <nav id="mainmenu" class="mainmenu">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button style="margin-top: 15px;" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar" style="background-color: #53555C;"></span>
+                  <span class="icon-bar" style="background-color: #53555C;"></span>
+                  <span class="icon-bar" style="background-color: #53555C;"></span>
+                </button>
+                <div class="mainmenu mmLogo">
+                  <ul>
+                    <li class="logo-wrapper">
+                        <%= link_to content_tag(:h3, 'WikiWrite'), root_path %>
+                    </li>
+                  </ul>
+                </div>
+                
+              </div>
+
+            <!-- <nav id="mainmenu" class="mainmenu"> -->
+            <div class="mainmenu navbar-collapse collapse">
               <ul>
-                <li class="logo-wrapper">
-                    <%= link_to content_tag(:h3, 'WikiWrite'), root_path %>
-                </li>
                 <% if current_user %>
                   <li class="active">
                     <%= link_to "My Dashboard", authenticated_root_path, data: { no_turbolink: true } %>
@@ -74,7 +90,8 @@
                   <% end %>
                 </div>
               </ul>
-            </nav>
+            </div>
+            </div>
           </div>
         </div>
 

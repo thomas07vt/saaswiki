@@ -309,7 +309,49 @@ a:hover {
 .ribbon-red {
   background-color: #FF7373;
 }
+
+
+@media (min-width: 319px) {
+
+  .loginpricingdiv {
+      width: 100%;
+      margin: 0px auto auto;
+  }
+
+  .pricing-plan {
+    width: 100%;
+  }
+
+  .logindiv {
+    width: 100%;
+    margin: 0px auto;
+  }
+}
+
+@media (min-width: 350px) {
+
+  .pricing-plan {
+    width: 32%;
+  }
+
+  .logindiv {
+    width: 80%;
+    margin: 0px auto;
+  }
+}
+
 @media (min-width: 768px) {
+
+  .logindiv {
+    width: 60%;
+    margin: 0px auto;
+  }
+
+  .loginpricingdiv {
+      width: 80%;
+      margin: 0px auto auto;
+  }
+
   .pricing-plan {
     width: 33%;
     margin: 20px 0;
@@ -356,6 +398,20 @@ a:hover {
     background-clip: padding-box;
     z-index: 4;
   }
+}
+
+@media (min-width: 900px) {
+
+  .logindiv {
+    width: 40%;
+    margin: 0px auto;
+  }
+
+  .loginpricingdiv {
+      width: 60%;
+      margin: 0px auto auto;
+  }
+
 }
 /*--------------------------------------------------------------------------
 +	Contact Us Style
