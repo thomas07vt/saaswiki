@@ -14,6 +14,116 @@
  */
 @import "bootstrap";
 
+/* I need to override the bootstrap default here to make the navbar look better*/
+
+  .mainmenu {
+    font-size: 0.8em;
+  }
+  .mainmenu-submenu {
+    font-size: 1.2em;
+  }
+  .mainmenu-submenu li,
+  .mainmenu-submenu h4 {
+    padding-left: 10px;
+  }
+
+@media screen and (max-width: 479px) {
+
+  .loginpricingdiv {
+    width: 100%;
+    margin: 0 auto auto auto;
+  }
+
+  .pricing-plan {
+    width: 100%;
+  }
+
+  .mmLogo {
+    width: auto !important;
+    display: block;
+  }
+
+  .mainmenu {
+    /*font-size: 120%;*/
+    float: left;
+    font-size: 100% !important;
+    /*width: auto !important;*/
+  }
+  .mainmenu > ul,
+  .mainmenu .mainmenu-submenu-inner {
+    width: 100%;
+    padding: 0;
+  }
+  .mainmenu .mainmenu-submenu-inner {
+    padding: 0 1.5em;
+    font-size: 75%;
+  }
+  .mainmenu > ul > li {
+    display: block;
+    border-bottom: none !important;
+  }
+  .mainmenu > ul > li > a {
+    /*display: block;*/
+    padding: 1em 3em;
+  }
+  .mainmenu > ul > li:last-child {
+    border: none;
+  }
+  .mainmenu .mainmenu-submenu {
+    position: relative;
+  }
+  .mainmenu-submenu h4 {
+    padding-top: 0.6em;
+  }
+  .mainmenu .mainmenu-submenu-inner > div {
+    width: 100%;
+    float: none;
+    padding: 0;
+  }
+
+  .user-info {
+    float: left !important;
+    padding-left: 20px;
+  }
+}
+
+
+@media (min-width: 568px) {
+
+  .loginpricingdiv {
+    width: 100%;
+    margin: 0 auto auto auto;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-collapse {
+    width: auto;
+    border-top: 0;
+    box-shadow: none;
+  }
+  .navbar-collapse.collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0;
+    overflow: visible !important;
+  }
+  .navbar-collapse.in {
+    overflow-y: visible;
+  }
+  .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .navbar-header {
+    display: block;
+    float: left;
+  }
+}
+
+
 .user-info {
   margin-top: 21px;
   font-size: 1.2em;
@@ -36,10 +146,6 @@
   margin: 0 auto;
 }
 
-.loginpricingdiv {
-  width: 60%;
-  margin: 0 auto;
-}
 
 #exp_year {
   width: auto;
@@ -93,6 +199,7 @@ main {
   display: inline-block; 
   text-decoration: none;
   display: block;
+  padding-top: 21px;
 }
 
 .hackySpan:hover {

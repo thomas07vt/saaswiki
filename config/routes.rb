@@ -1,5 +1,6 @@
 Saaswiki::Application.routes.draw do
   get "subscriptions/finalize"
+  get "subscriptions/edit"
 
   get "username_suggestions", :to => "assigned_wikis#username_suggestions"
 

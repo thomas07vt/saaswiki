@@ -8,13 +8,13 @@ feature 'User can click Sign Up link in header' do
   end
 end
 
-feature 'User can click free option under Pricing to sign up' do 
-  scenario 'Successfully' do 
-    visit root_path
-    click_link('pricingFreeSignUp')
-    current_path.should == '/users/sign_up'
-  end
-end
+# feature 'User can click free option under Pricing to sign up' do 
+#   scenario 'Successfully' do 
+#     visit root_path
+#     click_link('pricingFreeSignUp')
+#     current_path.should == '/users/sign_up'
+#   end
+# end
 
 feature 'User can Sign Up with Username, Email, and PW' do
   scenario 'Successfully' do
