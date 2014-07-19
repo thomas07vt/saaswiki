@@ -321,6 +321,11 @@ a:hover {
   .pricing-plan {
     width: 100%;
   }
+
+  .logindiv {
+    width: 100%;
+    margin: 0px auto;
+  }
 }
 
 @media (min-width: 350px) {
@@ -328,9 +333,19 @@ a:hover {
   .pricing-plan {
     width: 32%;
   }
+
+  .logindiv {
+    width: 80%;
+    margin: 0px auto;
+  }
 }
 
 @media (min-width: 768px) {
+
+  .logindiv {
+    width: 60%;
+    margin: 0px auto;
+  }
 
   .loginpricingdiv {
       width: 80%;
@@ -386,6 +401,11 @@ a:hover {
 }
 
 @media (min-width: 900px) {
+
+  .logindiv {
+    width: 40%;
+    margin: 0px auto;
+  }
 
   .loginpricingdiv {
       width: 60%;
